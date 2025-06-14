@@ -12,4 +12,10 @@ function buildRecursive(arr) {
   return root;
 }
 
+function buildTree(array) {
+  const sortedArray = [...new Set(array)].sort((a, b) => a - b);
+
+  return buildRecursive(sortedArray);
+}
+
 export { buildTree };
