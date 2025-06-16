@@ -66,4 +66,30 @@ function Tree(arr) {
 
     root = deleteRecursive(root, value);
   };
+
+  const find = (value) => {
+    const findRecursive = (node, value) => {
+      if (node === null) return null;
+
+      if (node.data === value) return node;
+
+      if (value < node.data) {
+        return findRecursive(node.left, value);
+      } else {
+        return findRecursive(node.right, value);
+      }
+    };
+    return findRecursive(root, value);
+  };
+
+  return {
+    prettyPrint,
+    insert,
+    deleteItem,
+    find,
+  };
 }
+
+const newTree = Tree([23, 7, 1, 4, 9, 4, 67, 8, 3, 6345, 7, 5, 324, 9]);
+newTree.prettyPrint();
+console.log(newTree.find(4));
