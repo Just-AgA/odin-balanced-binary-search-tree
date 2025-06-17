@@ -82,14 +82,43 @@ function Tree(arr) {
     return findRecursive(root, value);
   };
 
+  const levelOrder = (callback) => {
+    if (typeof callback !== 'function') {
+      throw new Error('A callback function is required');
+    }
+
+    const result = [];
+
+    if (root === null) return result;
+    const queue = [root];
+
+    while (queue.length > 0) {
+      const currentNode = queue.shift();
+      callback(currentNode);
+      result.push(currentNode.data);
+      if (currentNode.left) queue.push(currentNode.left);
+      if (currentNode.right) queue.push(currentNode.right);
+    }
+
+    return result;
+  };
+
   return {
     prettyPrint,
     insert,
     deleteItem,
     find,
+    levelOrder,
+    inOrder,
+    preOrder,
+    postOrder,
   };
 }
 
 const newTree = Tree([23, 7, 1, 4, 9, 4, 67, 8, 3, 6345, 7, 5, 324, 9]);
 newTree.prettyPrint();
 console.log(newTree.find(4));
+newTree.levelOrder((node) => console.log(node.data * 2));
+newTree.inOrder((node) => console.log(node.data * 2));
+newTree.preOrder((node) => console.log(node.data * 2));
+newTree.postOrder((node) => console.log(node.data * 2));
