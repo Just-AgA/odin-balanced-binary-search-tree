@@ -123,6 +123,26 @@ function Tree(arr) {
     return result;
   };
 
+  const preOrder = (callback) => {
+    if (typeof callback !== 'function') {
+      throw new Error('A callback function is required');
+    }
+
+    const result = [];
+
+    const traverse = (node) => {
+      if (node === null) return;
+
+      callback(node);
+      result.push(node.data);
+      traverse(node.left);
+      traverse(node.right);
+    };
+
+    traverse(root);
+    return result;
+  };
+
   return {
     prettyPrint,
     insert,
@@ -132,6 +152,9 @@ function Tree(arr) {
     inOrder,
     preOrder,
     postOrder,
+    height,
+    depth,
+    isBalanced,
   };
 }
 
