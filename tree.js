@@ -191,6 +191,22 @@ function Tree(arr) {
     return computeHeight(targetNode);
   };
 
+  const depth = (value) => {
+    function computeDepth(node, value, depth = 0) {
+      if (node === null) return null;
+
+      if (node.data === value) return depth;
+
+      if (value < node.data) {
+        return computeDepth(node.left, value, depth + 1);
+      } else {
+        return computeDepth(node.right, value, depth + 1);
+      }
+    }
+
+    return computeDepth(root, value);
+  };
+
   return {
     prettyPrint,
     insert,
