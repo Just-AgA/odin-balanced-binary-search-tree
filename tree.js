@@ -1,4 +1,5 @@
 import { buildTree } from './balanced_binary_search.js';
+import { Node } from './node.js';
 
 function Tree(arr) {
   let root = buildTree(arr);
@@ -163,6 +164,33 @@ function Tree(arr) {
     return result;
   };
 
+  const height = (value) => {
+    // Helper function that find the node with the specfied value
+    function findNode(node, value) {
+      if (node === null) return null;
+
+      if (value < node.value) return findNode(node.left, value);
+      if (value > node.value) return findNode(node.right, value);
+
+      return node;
+    }
+
+    // Compute height of the subtree rooted at given node
+    function computeHeight(node) {
+      if (node === null) return -1;
+
+      const leftHeight = computeHeight(node.left);
+      const rightHeight = computeHeight(node.right);
+
+      return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    const targetNode = findNode(root, value);
+    if (targetNode === null) return null;
+
+    return computeHeight(targetNode);
+  };
+
   return {
     prettyPrint,
     insert,
@@ -175,13 +203,25 @@ function Tree(arr) {
     height,
     depth,
     isBalanced,
+    rebalance,
   };
 }
 
-const newTree = Tree([23, 7, 1, 4, 9, 4, 67, 8, 3, 6345, 7, 5, 324, 9]);
+const newTree = Tree([23, 7, 1, 4, 9, 4, 67, 8, 3, 63, 7, 5, 95, 9]);
 newTree.prettyPrint();
-console.log(newTree.find(4));
+console.log(newTree.isBalanced());
 newTree.levelOrder((node) => console.log(node.data * 2));
+newTree.inOrder((node) => console.log(node.data * 2));
+newTree.preOrder((node) => console.log(node.data * 2));
+newTree.postOrder((node) => console.log(node.data * 2));
+newTree.insert('134');
+newTree.insert('234');
+newTree.insert('147');
+newTree.insert('764');
+console.log(newTree.isBalanced());
+newTree.rebalance();
+console.log('After rebalancing');
+console.log(newTree.isBalanced());
 newTree.inOrder((node) => console.log(node.data * 2));
 newTree.preOrder((node) => console.log(node.data * 2));
 newTree.postOrder((node) => console.log(node.data * 2));
