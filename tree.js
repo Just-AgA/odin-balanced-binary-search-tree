@@ -229,6 +229,21 @@ function Tree(arr) {
     return checkHeight(root) !== -1;
   };
 
+  const rebalance = () => {
+    const result = [];
+
+    const traverse = (node) => {
+      if (node === null) return;
+
+      traverse(node.left);
+      result.push(node.data);
+      traverse(node.right);
+    };
+
+    traverse(root);
+    root = buildTree(result);
+  };
+
   return {
     prettyPrint,
     insert,
